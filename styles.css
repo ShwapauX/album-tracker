@@ -15,7 +15,12 @@ body{
     margin: 30px;
 }
 
-.encuesta{
+album-form{
     margin: 20px;
 
+}
+
+main{
+    padding: 15px;
+    color: aliceblue;
 }
