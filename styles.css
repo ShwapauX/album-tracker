@@ -1,0 +1,21 @@
+body{
+    background: linear-gradient(blue,pink);
+}
+.row{
+    background-color: blue;
+
+}
+.col{
+    border-color: aliceblue;
+}
+.boxencuesta{
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 30px;
+}
+
+.encuesta{
+    margin: 20px;
+
+}
