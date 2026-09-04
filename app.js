@@ -24,7 +24,7 @@ const formEl = document.getElementById("album-form");
 console.log(formEl);
 const mainEl = document.querySelector("#album-container");
 console.log(mainEl);
-const albums = [];
+let albums = [];
 
 /**
  * Eventos
@@ -40,6 +40,16 @@ const albums = [];
  * 5. crear un objeto con la informacion usando Object.fromEntries() 
  * object from entries recibe un array de arrays
  */
+window.addEventListener("load", (event)=>{
+    if(getItemLocalStorage("albums")==undefined)return;
+    albums = [...getItemLocalStorage("albums")];
+    albums.map((album) => renderCard(album, mainEl));
+    /**
+     * segunda opcion si dejamos nuestro array como const
+     * getItemlLocalStorage("albums").forEach((album) => album.push(album))
+     */
+});
+
 
 formEl.addEventListener("submit", (event)=>{
     event.preventDefault();
@@ -55,26 +65,44 @@ formEl.addEventListener("submit", (event)=>{
     // const album = Object.fromEntries([... new FormData(formEl)])       esto es como hacer todo en una sola linea
     //console.log(album);
     albums.push(album);
-    console.log(albums);
-    renderCard(album, mainEl);
+    setLocalStorage("albums", albums)
+    // limpiamos antes de volver a renderizar las cards, para evitar la acumulacion
+    mainEl.innerHTML = ""
+    // renderizamos todas las cards dentro del array de albums
+    // renderCard(album, mainEl);
+    albums.map((album) => renderCard(album, mainEl));
     formEl.reset();
 });
 
 // se crea una variable para crear la card en base a la informacion obtenida
 const renderCard = (albumObject, htmlElement) => {
     const card = `
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">${albumObject.title}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">${albumObject.artist}</h6>
-                <p class="card-text">Genero:${albumObject.genre}</a>
-                <a href="#" class="card-link">${albumObject.year}</a>
-                <a href="#" class="card-link">${albumObject.rating}</a>
+                <h5 class="card-title">Album:${albumObject.title}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Artist:${albumObject.artist}</h6>
+                <br><p class="card-text">Genero:${albumObject.genre}</a>
+                <br><a href="#" class="card-link">Year:${albumObject.year}</a>
+                <br><a href="#" class="card-link">Rating: ${albumObject.rating}⭐</a>
             </div>
         </div>
     `;
     htmlElement.insertAdjacentHTML("beforeend", card);
 };
+
+const setLocalStorage = (key, value) => {
+    // Paso 1 convertir el valor a texto
+    const textValue = JSON.stringify(value);
+    // Paso 2 almacenar
+    localStorage.setItem(key,  textValue);
+}
+
+const getItemLocalStorage = (key) => {
+    if(localStorage.getItem(key) == null) return;
+    // convertimos de texto a lenguaje JS
+    const data = JSON.parse(localStorage.getItem(key))
+    return data;
+}
 
 /**
  * Opcion solo para este script
