@@ -1,26 +1,23 @@
 body{
-    background: linear-gradient(blue,pink);
+    background: linear-gradient(rgb(29, 121, 241),pink);
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
-.row{
-    background-color: blue;
 
-}
-.col{
-    border-color: aliceblue;
-}
 .boxencuesta{
     background-color: aliceblue;
-    border-radius: 10px;
-    padding: 10px;
+    padding: 30px;
     margin: 30px;
+    border-radius: 10px;
 }
 
 album-form{
     margin: 20px;
-
+    padding: 10px;
 }
 
 main{
-    padding: 15px;
+    padding: 10px;
     color: aliceblue;
+    border: 10px solid red;
 }

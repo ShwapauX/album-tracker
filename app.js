@@ -24,6 +24,7 @@ const formEl = document.getElementById("album-form");
 console.log(formEl);
 const mainEl = document.querySelector("#album-container");
 console.log(mainEl);
+const albums = [];
 
 /**
  * Eventos
@@ -48,21 +49,47 @@ formEl.addEventListener("submit", (event)=>{
     // ... extrae contenido de un elemento y lo introduce en un arrays
     const dataArray = [... formData];
     console.log(dataArray);
-    const dataObject = Object.fromEntries(dataArray);
-    console.log(dataObject);
+    const album = Object.fromEntries(dataArray);
+    console.log(album);
 
     // const album = Object.fromEntries([... new FormData(formEl)])       esto es como hacer todo en una sola linea
+    //console.log(album);
+    albums.push(album);
+    console.log(albums);
+    renderCard(album, mainEl);
+    formEl.reset();
 });
 
 // se crea una variable para crear la card en base a la informacion obtenida
-const card = `
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+const renderCard = (albumObject, htmlElement) => {
+    const card = `
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${albumObject.title}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">${albumObject.artist}</h6>
+                <p class="card-text">Genero:${albumObject.genre}</a>
+                <a href="#" class="card-link">${albumObject.year}</a>
+                <a href="#" class="card-link">${albumObject.rating}</a>
+            </div>
         </div>
-    </div>
-`;
+    `;
+    htmlElement.insertAdjacentHTML("beforeend", card);
+};
+
+/**
+ * Opcion solo para este script
+ * const renderCard = (albumObject) => {
+    const card = `
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${albumObject.title}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">${albumObject.artist}</h6>
+                <p class="card-text">${albumObject.genre}</a>
+                <a href="#" class="card-link">${albumObject.year}</a>
+                <a href="#" class="card-link">${albumObject.rating}</a>
+            </div>
+        </div>
+    `;
+    mainEl.isertAdjacentHTML("beforeend", card);
+};
+ */
